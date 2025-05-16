@@ -7,7 +7,7 @@ button {
     margin: 0.5em;
 }
 
-#factsSectionDiv {
+#factsSectionDiv, footer {
     background: rgb(243, 243, 243);
     
 }
