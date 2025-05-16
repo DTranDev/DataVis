@@ -17,3 +17,37 @@ footer {
     background: rgb(240, 240, 240);
 }
 
+/* Navigation Bar Css */
+
+body {
+    margin: 0;
+    font-family: Arial;
+}
+
+.navbar {
+    background-color: blue;
+    padding: 20px;
+}
+
+.navbar ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+}
+
+.navbar li {
+    margin-right: 20px;
+}
+
+.navbar a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.navbar a:hover {
+    text-decoration: underline;
+}
+
