@@ -1,0 +1,50 @@
+COUNTRY,Country,TIME_PERIOD,OBS_VALUE,Measure,Unit of measure
+COL,Colombia,2021,76.8,Life expectancy,Years
+COL,Colombia,2018,76.5,Life expectancy,Years
+AUS,Australia,2018,82.8,Life expectancy,Years
+AUS,Australia,2019,82.9,Life expectancy,Years
+AUT,Austria,2018,81.8,Life expectancy,Years
+CZE,Czechia,2019,79.3,Life expectancy,Years
+DNK,Denmark,2020,81.6,Life expectancy,Years
+BEL,Belgium,2021,81.9,Life expectancy,Years
+BEL,Belgium,2022,81.8,Life expectancy,Years
+BEL,Belgium,2018,81.7,Life expectancy,Years
+BEL,Belgium,2019,82.1,Life expectancy,Years
+CAN,Canada,2021,81.63,Life expectancy,Years
+CAN,Canada,2022,81.34,Life expectancy,Years
+CAN,Canada,2018,81.91,Life expectancy,Years
+CAN,Canada,2019,82.29,Life expectancy,Years
+CHL,Chile,2020,80.8,Life expectancy,Years
+CHL,Chile,2021,81,Life expectancy,Years
+AUS,Australia,2021,83.3,Life expectancy,Years
+AUS,Australia,2022,83.2,Life expectancy,Years
+CRI,Costa Rica,2022,80.8868,Life expectancy,Years
+CRI,Costa Rica,2023,81,Life expectancy,Years
+CRI,Costa Rica,2018,80.33305,Life expectancy,Years
+CRI,Costa Rica,2019,80.5,Life expectancy,Years
+CRI,Costa Rica,2020,80.615,Life expectancy,Years
+CZE,Czechia,2021,77.2,Life expectancy,Years
+CZE,Czechia,2022,79,Life expectancy,Years
+CZE,Czechia,2020,78.2,Life expectancy,Years
+CZE,Czechia,2018,79.1,Life expectancy,Years
+DNK,Denmark,2021,81.5,Life expectancy,Years
+DNK,Denmark,2022,81.3,Life expectancy,Years
+DNK,Denmark,2018,81,Life expectancy,Years
+DNK,Denmark,2019,81.5,Life expectancy,Years
+EST,Estonia,2021,77.2,Life expectancy,Years
+EST,Estonia,2022,78.1,Life expectancy,Years
+EST,Estonia,2018,78.5,Life expectancy,Years
+EST,Estonia,2019,79,Life expectancy,Years
+AUS,Australia,2020,83.2,Life expectancy,Years
+AUT,Austria,2022,81.4,Life expectancy,Years
+BEL,Belgium,2020,80.8,Life expectancy,Years
+CAN,Canada,2020,81.71,Life expectancy,Years
+CHL,Chile,2019,80.6,Life expectancy,Years
+COL,Colombia,2019,76.6,Life expectancy,Years
+CRI,Costa Rica,2021,80.75145,Life expectancy,Years
+AUT,Austria,2019,82,Life expectancy,Years
+AUT,Austria,2020,81.3,Life expectancy,Years
+AUT,Austria,2021,81.3,Life expectancy,Years
+EST,Estonia,2020,78.9,Life expectancy,Years
+CHL,Chile,2018,80.4,Life expectancy,Years
+COL,Colombia,2020,76.7,Life expectancy,Years
