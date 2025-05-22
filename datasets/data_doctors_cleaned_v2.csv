@@ -1,0 +1,33 @@
+country_code,country_name,time_period,unit_type,unit_value,unit_of_measure
+BEL,Belgium,2019,active_physicians,32542,Persons
+BEL,Belgium,2023,active_physicians,35348,Persons
+AUT,Austria,2020,active_physicians,47674,Persons
+AUT,Austria,2019,active_physicians,47224,Persons
+AUT,Austria,2022,active_physicians,49521,Persons
+CZE,Czechia,2020,active_physicians,51072.5,Persons
+CZE,Czechia,2019,active_physicians,50802.7,Persons
+BEL,Belgium,2022,active_physicians,34163,Persons
+CAN,Canada,2021,active_physicians,93998,Persons
+CAN,Canada,2020,active_physicians,92173,Persons
+CHL,Chile,2020,active_physicians,46369,Persons
+CHL,Chile,2022,active_physicians,48856,Persons
+CHL,Chile,2019,active_physicians,37021,Persons
+COL,Colombia,2019,active_physicians,113197,Persons
+CRI,Costa Rica,2020,active_physicians,3284,Persons
+CRI,Costa Rica,2019,active_physicians,3035,Persons
+CZE,Czechia,2021,active_physicians,52280.12000000001,Persons
+AUS,Australia,2020,active_physicians,105293,Persons
+AUS,Australia,2019,active_physicians,101841,Persons
+DNK,Denmark,2019,active_physicians,24700,Persons
+AUS,Australia,2021,active_physicians,108501,Persons
+AUT,Austria,2021,active_physicians,48705,Persons
+BEL,Belgium,2021,active_physicians,33387,Persons
+CAN,Canada,2019,active_physicians,91372,Persons
+CHL,Chile,2021,active_physicians,46762,Persons
+COL,Colombia,2020,active_physicians,118140,Persons
+CRI,Costa Rica,2021,active_physicians,3555,Persons
+CZE,Czechia,2022,active_physicians,51988.431384995674,Persons
+DNK,Denmark,2020,active_physicians,25522,Persons
+EST,Estonia,2019,active_physicians,4603,Persons
+BEL,Belgium,2020,active_physicians,33100,Persons
+,,,,,Persons
