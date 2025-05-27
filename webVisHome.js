@@ -9,8 +9,30 @@ function init () {
     // var to hold sortOrder boolean
     var sortOrder = false;
     
+    /*
     // (DATASET) sample dataset (IMPORT CSV HERE)
     var dataset = [22, 10, 2, 19, 9, 15, 18, 12, 15, 6, 21, 8];
+    */
+
+    // Load in dataset using D3 and read three columns (a date + a number)
+    var dataset
+    d3.csv("datasets/data_doctors_new_V3.csv", function(d) {
+    return {
+        country_code: +d.number,
+        number: +d.number,
+        number: +d.number,
+        number: +d.number,
+        number: +d.number,
+        number: +d.number
+        };
+    }).then(function(data){
+    dataset = data;
+
+    // need to move chart functions here
+
+    // print data to the console to check if data is loaded properly
+    console.table(dataset, ["date", "number"]);
+    });
 
     // (SCALES)
     // (X) scale qualitative x axis using data set length (.domain) and a rounded range (.rangeRound)
