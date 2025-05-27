@@ -52,12 +52,13 @@ function init () {
             };
         })
     ]).then(function(data){
-        // assign data array to dataset variable
-        // data[0]= doctors.csv | data[1]= nurses.csv | data[2]= life_expectancies.csv
+        // (DATA) assign 'data' array to 'dataset' variable
+        // dataset[0]= doctors.csv | dataset[1]= nurses.csv | dataset[2]= life_expectancies.csv
         dataset = data;
 
         // INSERT CHART FUNCTIONS HERE!!!
 
+        // (DOCTORS) CHART
         // the anonymous function accesses a specific column from a single data file specified by [0], [1], [2], 
         // .map returns the anonymous function's result as a new array before assigning it to a variable
         var doctorValues = dataset[0].map(function(d) {
@@ -66,7 +67,25 @@ function init () {
         // log in console to check if it works
         console.log(doctorValues);
         // draw chart for doctors
-        drawChart(doctorValues);
+        drawChart(doctorValues, "Doctors Chart");
+
+        // (NURSES) CHART
+        var nurseValues = dataset[1].map(function(d) {
+            return d.unit_value;
+        });
+        // log in console to check if it works
+        console.log(nurseValues);
+        // draw chart for nurses
+        drawChart(nurseValues, "Nurses Chart");
+
+        // (LIFE EXPECTANCY) CHART
+        var leValues = dataset[2].map(function(d) {
+            return d.unit_value;
+        });
+        // log in console to check if it works
+        console.log(leValues);
+        // draw chart for life expectancy
+        drawChart(leValues, "Life Expectancy Chart");
 
         // print data to the console for each file to check if data is loaded properly
         console.table(dataset[0], ["country_code", "country_name", "time_period", "unit_type", "unit_value", "unit_of_measure"]);
@@ -74,8 +93,8 @@ function init () {
         console.table(dataset[2], ["country_code", "country_name", "time_period", "unit_type", "unit_value", "unit_of_measure"]);
     });
 
-    // function to generate a bar chart for an single dataset, takes one 'dataset' parameter. e.g. an array of numerical values
-    function drawChart(dataset) {
+    // function to generate a bar chart for an single dataset, takes two parameters . e.g. an array of numerical values and a title string 
+    function drawChart(dataset, title) {
         // (SCALES)
         // (X) scale qualitative x axis using data set length (.domain) and a rounded range (.rangeRound)
         xScale = d3.scaleBand()
@@ -89,8 +108,17 @@ function init () {
             .domain([0, d3.max(dataset)])
             .range([h - padding, padding]);
 
-        // (SVG CANVAS) select #chart-location and add the svg canvas, assigning attributes w and h
-        svg= d3.select ("#chart-location")
+        // (SVG CANVAS) 
+        // svgDiv var holding selection of #chart-location with an added div
+        var svgDiv = d3.select("#chart-location")
+        .append("div")
+        .attr("class", "svg-div");
+
+        // Adds a h3 title inside each individual svgDiv, passed in when calling the function
+        svgDiv.append("h3").text(title);
+
+        // Add an svg canvas inside a new svgDiv, assigning attributes w and h
+        svg= svgDiv
         .append("svg")
         .attr("width", w)
         .attr("height", h);
