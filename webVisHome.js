@@ -9,7 +9,7 @@ function init () {
     // var to hold sortOrder boolean
     var sortOrder = false;
     
-    // (DATASET) default dataset (IMPORT CSV HERE)
+    // (DATASET) default dataset
     var dataset = [22, 10, 2, 19, 9, 15, 18, 12, 15, 6, 21, 8];
 
     // use 'Promise' to load multiple csv files
