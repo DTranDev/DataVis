@@ -9,29 +9,56 @@ function init () {
     // var to hold sortOrder boolean
     var sortOrder = false;
     
-    /*
-    // (DATASET) sample dataset (IMPORT CSV HERE)
+    
+    // (DATASET) default dataset (IMPORT CSV HERE)
     var dataset = [22, 10, 2, 19, 9, 15, 18, 12, 15, 6, 21, 8];
-    */
 
-    // Load in dataset using D3 and read three columns (a date + a number)
-    var dataset
-    d3.csv("datasets/data_doctors_new_V3.csv", function(d) {
-    return {
-        country_code: +d.number,
-        number: +d.number,
-        number: +d.number,
-        number: +d.number,
-        number: +d.number,
-        number: +d.number
-        };
-    }).then(function(data){
-    dataset = data;
+    // use 'Promise' to load multiple csv files
+    Promise.all([
+        // Load in doctors dataset using D3 and read six columns
+        d3.csv("datasets/data_doctors_new_V3.csv", function(d) {
+        return {
+            country_code: d.country_code,
+            country_name: d.country_name,
+            time_period: +d.time_period,
+            unit_type: d.unit_type,
+            unit_value: +d.unit_value,
+            unit_of_measure: d.unit_of_measure
+            };
+        }),
+        // Load in nurses dataset using D3 and read six columns
+        d3.csv("datasets/data_nurses_new_V3.csv", function(d) {
+        return {
+            country_code: d.country_code,
+            country_name: d.country_name,
+            time_period: +d.time_period,
+            unit_type: d.unit_type,
+            unit_value: +d.unit_value,
+            unit_of_measure: d.unit_of_measure
+            };
+        }),
+        // Load in life expectancies dataset using D3 and read six columns
+        d3.csv("datasets/data_life_expectancies_new_V3.csv", function(d) {
+        return {
+            country_code: d.country_code,
+            country_name: d.country_name,
+            time_period: +d.time_period,
+            unit_type: d.unit_type,
+            unit_value: +d.unit_value,
+            unit_of_measure: d.unit_of_measure
+            };
+        })
+    ]).then(function(data){
+        // assign data array to dataset variable
+        // data[0]= doctors.csv | data[1]= nurses.csv | data[2]= life_expectancies.csv
+        dataset = data;
 
     // need to move chart functions here
 
-    // print data to the console to check if data is loaded properly
-    console.table(dataset, ["date", "number"]);
+    // print data to the console for each file to check if data is loaded properly
+    console.table(dataset[0], ["country_code", "country_name", "time_period", "unit_type", "unit_value", "unit_of_measure"]);
+    console.table(dataset[1], ["country_code", "country_name", "time_period", "unit_type", "unit_value", "unit_of_measure"]);
+    console.table(dataset[2], ["country_code", "country_name", "time_period", "unit_type", "unit_value", "unit_of_measure"]);
     });
 
     // (SCALES)
