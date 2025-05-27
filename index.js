@@ -115,7 +115,7 @@ function init () {
         .attr("class", "svg-div");
 
         // Adds a h3 title inside each individual svgDiv, passed in when calling the function
-        svgDiv.append("h3").text(title);
+        svgDiv.append("h2").text(title);
 
         // Add an svg canvas inside a new svgDiv, assigning attributes w and h
         svg= svgDiv
