@@ -54,7 +54,7 @@ function init () {
 
     // (NOTE) need to move chart functions here
     // Planning to adapt the code by moving all existing chart related elements into a single function that accepts a single data[0] array as the dataset.
-    // This one function will allow us to generate a chart for each data file.
+    // This one function will possibly allow us to generate a chart for each data file if we call it here.
 
     // print data to the console for each file to check if data is loaded properly
     console.table(dataset[0], ["country_code", "country_name", "time_period", "unit_type", "unit_value", "unit_of_measure"]);
