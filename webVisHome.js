@@ -9,7 +9,6 @@ function init () {
     // var to hold sortOrder boolean
     var sortOrder = false;
     
-    
     // (DATASET) default dataset (IMPORT CSV HERE)
     var dataset = [22, 10, 2, 19, 9, 15, 18, 12, 15, 6, 21, 8];
 
@@ -53,7 +52,7 @@ function init () {
         // data[0]= doctors.csv | data[1]= nurses.csv | data[2]= life_expectancies.csv
         dataset = data;
 
-    // need to move chart functions here
+    // (NOTE) need to move chart functions here
 
     // print data to the console for each file to check if data is loaded properly
     console.table(dataset[0], ["country_code", "country_name", "time_period", "unit_type", "unit_value", "unit_of_measure"]);
