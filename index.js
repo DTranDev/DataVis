@@ -12,13 +12,18 @@ function init () {
     // Chart titles (Customise chart titles here)
     var doctorChartTitle = "Doctors Chart";
     var nurseChartTitle = "Nurses Chart";
-    var mortalityChartTitle = "Avaoidable Mortality Chart";
+    var mortalityChartTitle = "Avoidable Mortality Chart";
 
-    // var to hold sortOrder boolean
-    var sortOrder = false;
+    // var to hold the currently selected chart's id
+    var currentChartID;
+    // array variables to hold sort orders of charts
+    var sortedChartSortOrder = [];
+    var unsortedChartOrder = [];
     
-    // (DATASET) default dataset
+    /*
+    // (DATASET) default dataset for testing
     var dataset = [22, 10, 2, 19, 9, 15, 18, 12, 15, 6, 21, 8];
+    */
 
     // use 'Promise' to load multiple csv files
     Promise.all([
@@ -57,7 +62,7 @@ function init () {
         })
     ]).then(function(data){
         // (DATA) assign 'data' array to 'dataset' variable
-        // dataset[0]= doctors.csv | dataset[1]= nurses.csv | dataset[2]= life_expectancies.csv
+        // e.g. dataset[0]= doctors.csv | dataset[1]= nurses.csv | dataset[2]= mortality.csv
         dataset = data;
 
         // INSERT CHART FUNCTIONS HERE!!!
@@ -71,7 +76,7 @@ function init () {
         // log in console to check if it works
         console.log(doctorValues);
         // draw chart for doctors
-        drawChart(doctorValues, doctorChartTitle, "Doctors");
+        drawChart(doctorValues, "Doctors", doctorChartTitle);
 
         // (NURSES) CHART
         var nurseValues = dataset[1].map(function(d) {
@@ -80,7 +85,7 @@ function init () {
         // log in console to check if it works
         console.log(nurseValues);
         // draw chart for nurses
-        drawChart(nurseValues, nurseChartTitle, "Nurses");
+        drawChart(nurseValues, "Nurses", nurseChartTitle);
 
         // (LIFE EXPECTANCY) CHART
         var leValues = dataset[2].map(function(d) {
@@ -89,7 +94,7 @@ function init () {
         // log in console to check if it works
         console.log(leValues);
         // draw chart for life expectancy
-        drawChart(leValues, mortalityChartTitle, "Avoidable Mortality");
+        drawChart(leValues, "Avoidable-Mortality", mortalityChartTitle);
 
         // print data to the console for each file to check if data is loaded properly
         console.table(dataset[0], ["country_code", "country_name", "time_period", "unit_type", "unit_value", "unit_of_measure"]);
@@ -101,7 +106,7 @@ function init () {
     // (DRAW CHART)
     // function to generate a bar chart for an single dataset, takes three parameters.
     // e.g. drawChart(dataset[0], "doctors.csv", "Doctors")
-    function drawChart(dataset, title, chartID) {
+    function drawChart(dataset, chartID, chartTitle) {
         // (SCALES)
         // (X) scale qualitative x axis using data set length (.domain) and a rounded range (.rangeRound)
         xScale = d3.scaleBand()
@@ -120,18 +125,20 @@ function init () {
         var svgDiv = d3.select("#chart-location")
         .append("div")
         .attr("class", "svg-div");
-        
 
         // Adds a h3 title inside each individual svgDiv, passed in when calling the function
-        svgDiv.append("h2").text(title);
+        svgDiv.append("h2").text(chartTitle);
 
-        // Add an svg canvas (chart) inside a new svgDiv, assigning attributes w and h
+        // Add an svg canvas (chart) inside svgDiv, assigning attributes w and h
         svg= svgDiv
         .append("svg")
         .attr("width", w)
-        .attr("height", h)
-        // 
-        .attr("id", chartID);
+        .attr("height", h);
+        
+        // assign id to finished chart, uses argument passed in when calling drawChart()
+        svgDiv.attr("id", chartID)
+        // hide all charts by default
+        .style("display", "none");
 
         // (AXES)
         // (X-AXIS)
@@ -158,9 +165,9 @@ function init () {
 
         // (RECTANGLE) select and add rect shape elements to placeholders created from dataset values
         svg.selectAll("rect")
-        .data (dataset)
+        .data(dataset)
         .enter()
-        .append ("rect")
+        .append("rect")
 
         // (RECTANGLE ATTRIBUTES)
         // (X) spread out rect shapes on x axis
@@ -181,15 +188,30 @@ function init () {
         // (CHART BUTTON) adds a chart button to 'buttonDiv'
         var chartButton = document.createElement("button")
         chartButton.classList.add("chart-button");
-        // (TEXT) button text uses 'chartID' entered when calling the drawChart() function
-        chartButton.innerHTML = chartID
+        // (LABEL) button label uses 'chartID' passed when calling the drawChart() function, replacing "-" with spaces because chartID is also assigned to svgDiv id
+        chartButton.innerHTML = chartID.replace("-", " ")
         buttonDiv.appendChild(chartButton)
         // (LISTENER) on click
-        d3.select (chartButton)
+        d3.select(chartButton)
         .on("click",function() {
-            // insert action here
+            showChart(chartID);
             }
         );
+
+        // hides all svg charts and displays one
+        function showChart(chartID) {
+            // hide all charts
+            d3.selectAll(".svg-div")
+            .style("display", "none");
+            // show this specific chart
+            d3.select ("#" + chartID)
+            .style("display", "block");
+
+            // assign the active chart's id to the current chart variable
+            currentChartID = chartID;
+            // save the initial unsorted order of the datasets
+            unsortedChartOrder[chartID] = dataset;
+        }
 
     }
 
@@ -197,26 +219,35 @@ function init () {
     // (SORT BUTTON) adds a sort button to 'buttonDiv'
     var sortButton = document.createElement("button")
     sortButton.id = ("sortButton");
-    // (TEXT) button text
+    // (LABEL) button label
     sortButton.innerHTML = ("Sort")
     buttonDiv.appendChild(sortButton)
     // (LISTENER) on click, sort bars
-    d3.select ("#sortButton")
+    d3.select("#sortButton")
     // change sortOrder boolean and call sortBars()
     .on("click",function() {
-        sortOrder = !sortOrder;
-        sortBars(sortOrder);
+        sortBars();
         }
     );
 
     // (FUNCTIONS)
     // (SORT FUNCTION) sort bars in a specific order (ascending/descending), takes boolean parameter (sortOrder)
-    function sortBars(sortOrder) {
-        svg.selectAll("rect")
+    function sortBars() {
+
+        // select the svg with the current active chart
+        activeSVG = d3.select("#" + currentChartID).select("svg");
+
+        // toggle/change the sort order for the current chart
+        sortedChartSortOrder[currentChartID] = !sortedChartSortOrder[currentChartID];
+        // create a variable from the toggled sort order of the current chart
+        newSortOrder = sortedChartSortOrder[currentChartID];
+
+        // select all rects within the current svg
+        activeSVG.selectAll("rect")
         // sort bars
         .sort(function(a, b) {
-            // change sort order based on boolean
-            if (sortOrder) {
+            // change sort order based on the new toggled sort order
+            if (newSortOrder) {
                 return (d3.ascending(a, b));
             } else {
                 return (d3.descending(a, b));
@@ -226,9 +257,9 @@ function init () {
         // smooth transition
         .transition()
         .delay(function(d, i){
-            return i * 55;
+            return i * 25;
         })
-        .duration(500)
+        .duration(250)
         .attr("x", function(d, i) {
         return xScale(i);
         });
