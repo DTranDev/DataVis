@@ -5,10 +5,14 @@ function init () {
     var h= 600;
     var w= 1000;
     var padding = 50;
-
     var xScale;
     var yScale;
     var svg;
+
+    // Chart titles (Customise chart titles here)
+    var doctorChartTitle = "Doctors Chart";
+    var nurseChartTitle = "Nurses Chart";
+    var mortalityChartTitle = "Avaoidable Mortality Chart";
 
     // var to hold sortOrder boolean
     var sortOrder = false;
@@ -19,7 +23,7 @@ function init () {
     // use 'Promise' to load multiple csv files
     Promise.all([
         // Load in doctors dataset using D3 and read six columns
-        d3.csv("datasets/data_doctors_new_V3.csv", function(d) {
+        d3.csv("datasets/data_doctors.csv", function(d) {
         return {
             country_code: d.country_code,
             country_name: d.country_name,
@@ -30,7 +34,7 @@ function init () {
             };
         }),
         // Load in nurses dataset using D3 and read six columns
-        d3.csv("datasets/data_nurses_new_V3.csv", function(d) {
+        d3.csv("datasets/data_nurses.csv", function(d) {
         return {
             country_code: d.country_code,
             country_name: d.country_name,
@@ -41,7 +45,7 @@ function init () {
             };
         }),
         // Load in life expectancies dataset using D3 and read six columns
-        d3.csv("datasets/data_life_expectancies_new_V3.csv", function(d) {
+        d3.csv("datasets/data_mortality.csv", function(d) {
         return {
             country_code: d.country_code,
             country_name: d.country_name,
@@ -67,7 +71,7 @@ function init () {
         // log in console to check if it works
         console.log(doctorValues);
         // draw chart for doctors
-        drawChart(doctorValues, "Doctors Chart", "Doctors");
+        drawChart(doctorValues, doctorChartTitle, "Doctors");
 
         // (NURSES) CHART
         var nurseValues = dataset[1].map(function(d) {
@@ -76,7 +80,7 @@ function init () {
         // log in console to check if it works
         console.log(nurseValues);
         // draw chart for nurses
-        drawChart(nurseValues, "Nurses Chart", "Nurses");
+        drawChart(nurseValues, nurseChartTitle, "Nurses");
 
         // (LIFE EXPECTANCY) CHART
         var leValues = dataset[2].map(function(d) {
@@ -85,7 +89,7 @@ function init () {
         // log in console to check if it works
         console.log(leValues);
         // draw chart for life expectancy
-        drawChart(leValues, "Life Expectancy Chart", "Life Expectancy");
+        drawChart(leValues, mortalityChartTitle, "Avoidable Mortality");
 
         // print data to the console for each file to check if data is loaded properly
         console.table(dataset[0], ["country_code", "country_name", "time_period", "unit_type", "unit_value", "unit_of_measure"]);
@@ -126,6 +130,7 @@ function init () {
         .append("svg")
         .attr("width", w)
         .attr("height", h)
+        // 
         .attr("id", chartID);
 
         // (AXES)

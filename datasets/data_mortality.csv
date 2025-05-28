@@ -1,0 +1,61 @@
+country_code,country_name,time_period,unit_type,unit_value,unit_of_measure
+AUS,Australia,2015,Avoidable mortality,36981,Deaths
+AUS,Australia,2020,Avoidable mortality,37042.5,Deaths
+AUS,Australia,2019,Avoidable mortality,38993,Deaths
+AUS,Australia,2018,Avoidable mortality,36958,Deaths
+AUS,Australia,2017,Avoidable mortality,36965.5,Deaths
+AUS,Australia,2016,Avoidable mortality,36459.5,Deaths
+BEL,Belgium,2020,Avoidable mortality,24797,Deaths
+BEL,Belgium,2019,Avoidable mortality,21211,Deaths
+BEL,Belgium,2018,Avoidable mortality,21816,Deaths
+BEL,Belgium,2017,Avoidable mortality,21735,Deaths
+BEL,Belgium,2016,Avoidable mortality,21837,Deaths
+BEL,Belgium,2015,Avoidable mortality,22266,Deaths
+CAN,Canada,2019,Avoidable mortality,73838,Deaths
+CAN,Canada,2018,Avoidable mortality,74751,Deaths
+CAN,Canada,2020,Avoidable mortality,79478,Deaths
+CAN,Canada,2017,Avoidable mortality,72401,Deaths
+CAN,Canada,2015,Avoidable mortality,70666,Deaths
+CAN,Canada,2016,Avoidable mortality,70628,Deaths
+CRI,Costa Rica,2020,Avoidable mortality,10226,Deaths
+CRI,Costa Rica,2019,Avoidable mortality,9440,Deaths
+CRI,Costa Rica,2018,Avoidable mortality,9103,Deaths
+CRI,Costa Rica,2017,Avoidable mortality,8490,Deaths
+CRI,Costa Rica,2016,Avoidable mortality,8603,Deaths
+CRI,Costa Rica,2015,Avoidable mortality,8087,Deaths
+FRA,France,2020,Avoidable mortality,121429,Deaths
+FRA,France,2019,Avoidable mortality,109525,Deaths
+FRA,France,2018,Avoidable mortality,110084,Deaths
+FRA,France,2017,Avoidable mortality,109681,Deaths
+FRA,France,2016,Avoidable mortality,109603,Deaths
+FRA,France,2015,Avoidable mortality,109517,Deaths
+ITA,Italy,2019,Avoidable mortality,98148,Deaths
+ITA,Italy,2017,Avoidable mortality,102037,Deaths
+ITA,Italy,2018,Avoidable mortality,99705,Deaths
+ITA,Italy,2020,Avoidable mortality,118672,Deaths
+ITA,Italy,2016,Avoidable mortality,101546,Deaths
+ITA,Italy,2015,Avoidable mortality,105615,Deaths
+LVA,Latvia,2020,Avoidable mortality,8890,Deaths
+LVA,Latvia,2019,Avoidable mortality,8556,Deaths
+LVA,Latvia,2018,Avoidable mortality,9174,Deaths
+LVA,Latvia,2017,Avoidable mortality,9238,Deaths
+LVA,Latvia,2016,Avoidable mortality,9489,Deaths
+LVA,Latvia,2015,Avoidable mortality,9845,Deaths
+POL,Poland,2020,Avoidable mortality,151269,Deaths
+POL,Poland,2019,Avoidable mortality,124735,Deaths
+POL,Poland,2018,Avoidable mortality,122685,Deaths
+POL,Poland,2017,Avoidable mortality,118457,Deaths
+POL,Poland,2016,Avoidable mortality,114671,Deaths
+POL,Poland,2015,Avoidable mortality,114080,Deaths
+ESP,Spain,2020,Avoidable mortality,89186,Deaths
+ESP,Spain,2019,Avoidable mortality,74599,Deaths
+ESP,Spain,2018,Avoidable mortality,75686,Deaths
+ESP,Spain,2017,Avoidable mortality,75705,Deaths
+ESP,Spain,2016,Avoidable mortality,75685,Deaths
+ESP,Spain,2015,Avoidable mortality,75486,Deaths
+SWE,Sweden,2020,Avoidable mortality,17154,Deaths
+SWE,Sweden,2019,Avoidable mortality,15977,Deaths
+SWE,Sweden,2018,Avoidable mortality,17040,Deaths
+SWE,Sweden,2017,Avoidable mortality,17086,Deaths
+SWE,Sweden,2016,Avoidable mortality,17180,Deaths
+SWE,Sweden,2015,Avoidable mortality,17358,Deaths

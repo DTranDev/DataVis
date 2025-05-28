@@ -1,0 +1,61 @@
+country_code,country_name,time_period,unit_type,unit_value,unit_of_measure
+AUS,Australia,2020,Active physicians,105293,Persons
+AUS,Australia,2019,Active physicians,101841,Persons
+AUS,Australia,2018,Active physicians,98395,Persons
+AUS,Australia,2016,Active physicians,91341,Persons
+AUS,Australia,2015,Active physicians,87999,Persons
+AUS,Australia,2017,Active physicians,95194,Persons
+BEL,Belgium,2018,Active physicians,32007,Persons
+BEL,Belgium,2017,Active physicians,44534,Persons
+BEL,Belgium,2020,Active physicians,33100,Persons
+BEL,Belgium,2019,Active physicians,32542,Persons
+BEL,Belgium,2015,Active physicians,42846,Persons
+BEL,Belgium,2016,Active physicians,43662,Persons
+CAN,Canada,2016,Active physicians,84063,Persons
+CAN,Canada,2015,Active physicians,82198,Persons
+CAN,Canada,2020,Active physicians,92173,Persons
+CAN,Canada,2019,Active physicians,91372,Persons
+CAN,Canada,2018,Active physicians,89772,Persons
+CAN,Canada,2017,Active physicians,86643,Persons
+CRI,Costa Rica,2016,Active physicians,2775,Persons
+CRI,Costa Rica,2015,Active physicians,2671,Persons
+CRI,Costa Rica,2019,Active physicians,3035,Persons
+CRI,Costa Rica,2017,Active physicians,2830,Persons
+CRI,Costa Rica,2018,Active physicians,2978,Persons
+CRI,Costa Rica,2020,Active physicians,3284,Persons
+ESP,Spain,2018,Active physicians,188166,Persons
+ESP,Spain,2017,Active physicians,180633,Persons
+ESP,Spain,2016,Active physicians,177731,Persons
+ESP,Spain,2015,Active physicians,178600,Persons
+ESP,Spain,2020,Active physicians,216766,Persons
+ESP,Spain,2019,Active physicians,207565,Persons
+FRA,France,2016,Active physicians,223571,Persons
+FRA,France,2015,Active physicians,222150,Persons
+FRA,France,2020,Active physicians,227946,Persons
+FRA,France,2019,Active physicians,227358,Persons
+FRA,France,2018,Active physicians,226219,Persons
+FRA,France,2017,Active physicians,224875,Persons
+ITA,Italy,2016,Active physicians,239642,Persons
+ITA,Italy,2015,Active physicians,233102,Persons
+ITA,Italy,2020,Active physicians,237844,Persons
+ITA,Italy,2019,Active physicians,241945,Persons
+ITA,Italy,2018,Active physicians,240301,Persons
+ITA,Italy,2017,Active physicians,241512,Persons
+LVA,Latvia,2016,Active physicians,6473,Persons
+LVA,Latvia,2015,Active physicians,6513,Persons
+LVA,Latvia,2020,Active physicians,6346,Persons
+LVA,Latvia,2019,Active physicians,6253,Persons
+LVA,Latvia,2018,Active physicians,6472,Persons
+LVA,Latvia,2017,Active physicians,6392,Persons
+POL,Poland,2020,Active physicians,126064,Persons
+POL,Poland,2017,Active physicians,90284,Persons
+POL,Poland,2018,Active physicians,89532,Persons
+POL,Poland,2016,Active physicians,91730,Persons
+POL,Poland,2015,Active physicians,88437,Persons
+POL,Poland,2019,Active physicians,125349,Persons
+SWE,Sweden,2015,Active physicians,40902,Persons
+SWE,Sweden,2020,Active physicians,44749,Persons
+SWE,Sweden,2016,Active physicians,42004,Persons
+SWE,Sweden,2019,Active physicians,44075,Persons
+SWE,Sweden,2018,Active physicians,43978,Persons
+SWE,Sweden,2017,Active physicians,42940,Persons
