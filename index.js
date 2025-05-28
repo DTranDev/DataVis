@@ -67,7 +67,7 @@ function init () {
         // log in console to check if it works
         console.log(doctorValues);
         // draw chart for doctors
-        drawChart(doctorValues, "Doctors Chart");
+        drawChart(doctorValues, "Doctors Chart", "Doctors");
 
         // (NURSES) CHART
         var nurseValues = dataset[1].map(function(d) {
@@ -76,7 +76,7 @@ function init () {
         // log in console to check if it works
         console.log(nurseValues);
         // draw chart for nurses
-        drawChart(nurseValues, "Nurses Chart");
+        drawChart(nurseValues, "Nurses Chart", "Nurses");
 
         // (LIFE EXPECTANCY) CHART
         var leValues = dataset[2].map(function(d) {
@@ -85,16 +85,17 @@ function init () {
         // log in console to check if it works
         console.log(leValues);
         // draw chart for life expectancy
-        drawChart(leValues, "Life Expectancy Chart");
+        drawChart(leValues, "Life Expectancy Chart", "Life Expectancy");
 
         // print data to the console for each file to check if data is loaded properly
         console.table(dataset[0], ["country_code", "country_name", "time_period", "unit_type", "unit_value", "unit_of_measure"]);
         console.table(dataset[1], ["country_code", "country_name", "time_period", "unit_type", "unit_value", "unit_of_measure"]);
         console.table(dataset[2], ["country_code", "country_name", "time_period", "unit_type", "unit_value", "unit_of_measure"]);
+
     });
 
     // function to generate a bar chart for an single dataset, takes two parameters . e.g. an array of numerical values and a title string 
-    function drawChart(dataset, title) {
+    function drawChart(dataset, title, buttonLabel) {
         // (SCALES)
         // (X) scale qualitative x axis using data set length (.domain) and a rounded range (.rangeRound)
         xScale = d3.scaleBand()
@@ -167,6 +168,23 @@ function init () {
         .attr("height", function(d, i) {
             return h - padding - yScale(d);
         })
+
+        // create a button for each chart
+        dataset.forEach(function(buttonLabel) {
+            // (CHART BUTTON) adds a chart button to 'buttonDiv'
+            var chartButton = document.createElement("button")
+            chartButton.class = ("chart-button");
+            // (TEXT) button text
+            chartButton.innerHTML = buttonLabel
+            buttonDiv.appendChild(chartButton)
+            // (LISTENER) on click
+            d3.select (".chart-button")
+            .on("click",function() {
+                // insert action here
+                }
+            )
+        });
+
     }
 
     // (BUTTONS)
