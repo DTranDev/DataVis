@@ -94,8 +94,10 @@ function init () {
 
     });
 
-    // function to generate a bar chart for an single dataset, takes two parameters . e.g. an array of numerical values and a title string 
-    function drawChart(dataset, title, buttonLabel) {
+    // (DRAW CHART)
+    // function to generate a bar chart for an single dataset, takes three parameters.
+    // e.g. drawChart(dataset[0], "doctors.csv", "Doctors")
+    function drawChart(dataset, title, chartID) {
         // (SCALES)
         // (X) scale qualitative x axis using data set length (.domain) and a rounded range (.rangeRound)
         xScale = d3.scaleBand()
@@ -114,15 +116,17 @@ function init () {
         var svgDiv = d3.select("#chart-location")
         .append("div")
         .attr("class", "svg-div");
+        
 
         // Adds a h3 title inside each individual svgDiv, passed in when calling the function
         svgDiv.append("h2").text(title);
 
-        // Add an svg canvas inside a new svgDiv, assigning attributes w and h
+        // Add an svg canvas (chart) inside a new svgDiv, assigning attributes w and h
         svg= svgDiv
         .append("svg")
         .attr("width", w)
-        .attr("height", h);
+        .attr("height", h)
+        .attr("id", chartID);
 
         // (AXES)
         // (X-AXIS)
@@ -169,21 +173,18 @@ function init () {
             return h - padding - yScale(d);
         })
 
-        // create a button for each chart
-        dataset.forEach(function(buttonLabel) {
-            // (CHART BUTTON) adds a chart button to 'buttonDiv'
-            var chartButton = document.createElement("button")
-            chartButton.class = ("chart-button");
-            // (TEXT) button text
-            chartButton.innerHTML = buttonLabel
-            buttonDiv.appendChild(chartButton)
-            // (LISTENER) on click
-            d3.select (".chart-button")
-            .on("click",function() {
-                // insert action here
-                }
-            )
-        });
+        // (CHART BUTTON) adds a chart button to 'buttonDiv'
+        var chartButton = document.createElement("button")
+        chartButton.classList.add("chart-button");
+        // (TEXT) button text uses 'chartID' entered when calling the drawChart() function
+        chartButton.innerHTML = chartID
+        buttonDiv.appendChild(chartButton)
+        // (LISTENER) on click
+        d3.select (chartButton)
+        .on("click",function() {
+            // insert action here
+            }
+        );
 
     }
 
@@ -203,7 +204,8 @@ function init () {
         }
     );
 
-    // function to sort bars in a specific order (ascending/descending), takes boolean parameter (sortOrder)
+    // (FUNCTIONS)
+    // (SORT FUNCTION) sort bars in a specific order (ascending/descending), takes boolean parameter (sortOrder)
     function sortBars(sortOrder) {
         svg.selectAll("rect")
         // sort bars
