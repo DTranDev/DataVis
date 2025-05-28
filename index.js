@@ -123,67 +123,67 @@ function init () {
         // (SVG CANVAS) 
         // svgDiv var holding selection of #chart-location with an added div
         var svgDiv = d3.select("#chart-location")
-        .append("div")
-        .attr("class", "svg-div");
+            .append("div")
+            .attr("class", "svg-div");
 
         // Adds a h3 title inside each individual svgDiv, passed in when calling the function
         svgDiv.append("h2").text(chartTitle);
 
         // Add an svg canvas (chart) inside svgDiv, assigning attributes w and h
         svg= svgDiv
-        .append("svg")
-        .attr("width", w)
-        .attr("height", h);
+            .append("svg")
+            .attr("width", w)
+            .attr("height", h);
         
         // assign id to finished chart, uses argument passed in when calling drawChart()
         svgDiv.attr("id", chartID)
-        // hide all charts by default
-        .style("display", "none");
+            // hide all charts by default
+            .style("display", "none");
 
         // (AXES)
         // (X-AXIS)
         var xAxis = d3.axisBottom()
-        // use same xScaling as chart
-        .scale(xScale);
-        // reference 'g' element for adding axis
+            // use same xScaling as chart
+            .scale(xScale);
+            // reference 'g' element for adding axis
         svg.append("g")
-        // class id 'axis' for styling
-        .attr("class", "x axis") 
-        // moves axis to bottom of chart using transform, translate(x, y)
-        .attr("transform", "translate(0, "+ (h - padding) +")")
-        .call(xAxis);
+            // class id 'axis' for styling
+            .attr("class", "x axis") 
+            // moves axis to bottom of chart using transform, translate(x, y)
+            .attr("transform", "translate(0, "+ (h - padding) +")")
+            .call(xAxis);
 
         // (Y-AXIS)
         var yAxis = d3.axisLeft()
-        // use same yScaling as chart
-        .scale(yScale);
+            // use same yScaling as chart
+            .scale(yScale);
         svg.append("g")
-        .attr("class", "y axis")
-        // moves axis to left of chart using transform, translate(x, y)
-        .attr("transform", "translate(" + padding + ",0)")
-        .call(yAxis);
+            .attr("class", "y axis")
+            // moves axis to left of chart using transform, translate(x, y)
+            .attr("transform", "translate(" + padding + ",0)")
+            .call(yAxis);
 
         // (RECTANGLE) select and add rect shape elements to placeholders created from dataset values
         svg.selectAll("rect")
-        .data(dataset)
-        .enter()
-        .append("rect")
+            .data(dataset)
+            .enter()
+            .append("rect")
 
-        // (RECTANGLE ATTRIBUTES)
-        // (X) spread out rect shapes on x axis
-        .attr("x", function(d, i) {
-            return  xScale(i);
-        })
-        // (Y) make bottom of bars the same height
-        .attr("y", function(d, i) {
-            return yScale(d);
-        })
-        // (WIDTH) calculate width of bars using bandwidth()
-        .attr("width", xScale.bandwidth())
-        // (HEIGHT) anonymous function to assign bar heights, padding is included due to displaying axis
-        .attr("height", function(d, i) {
-            return h - padding - yScale(d);
-        })
+            // (RECTANGLE ATTRIBUTES)
+            // (X) spread out rect shapes on x axis
+            .attr("x", function(d, i) {
+                return  xScale(i);
+            })
+            // (Y) make bottom of bars the same height
+            .attr("y", function(d, i) {
+                return yScale(d);
+            })
+            // (WIDTH) calculate width of bars using bandwidth()
+            .attr("width", xScale.bandwidth())
+            // (HEIGHT) anonymous function to assign bar heights, padding is included due to displaying axis
+            .attr("height", function(d, i) {
+                return h - padding - yScale(d);
+            })
 
         // (CHART BUTTON) adds a chart button to 'buttonDiv'
         var chartButton = document.createElement("button")
