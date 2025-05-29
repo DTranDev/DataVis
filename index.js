@@ -71,7 +71,7 @@ function init () {
         // (DOCTORS) CHART
 
         /*
-        // the anonymous function accesses a specific column from a single data file specified by [0], [1], [2], 
+        // anonymous function accesses a specific column from a single data file specified by [0], [1], [2], 
         // .map returns the anonymous function's result as a new array before assigning it to a variable
         var doctorValues = dataset[0].map(function(d) {
             return d.unit_value;
@@ -84,25 +84,12 @@ function init () {
         drawChart(doctors, "Doctors", doctorChartTitle);
 
         // (NURSES) CHART
-        /*
-        var nurseValues = dataset[1].map(function(d) {
-            return d.unit_value;
-        });
-        */
-
-
         // log in console to check if it works
         console.log(nurses);
         // draw chart for nurses
         drawChart(nurses, "Nurses", nurseChartTitle);
 
         // (LIFE EXPECTANCY) CHART
-        /*
-        var leValues = dataset[2].map(function(d) {
-            return d.unit_value;
-        });
-        */
-
         // log in console to check if it works
         console.log(mortality);
         // draw chart for life expectancy
@@ -119,6 +106,9 @@ function init () {
     // function to generate a bar chart for an single dataset, takes three parameters.
     // e.g. drawChart(dataset[0], "doctors.csv", "Doctors")
     function drawChart(dataset, chartID, chartTitle) {
+
+        // show doctor chart by default
+        showChart("Doctors");
 
         var countryCode = dataset.map(function(d) {return d.country_code;});
         var countryName = dataset.map(function(d) {return d.country_name;});
@@ -288,24 +278,30 @@ function init () {
         })
         xScale.domain(newXScale);
 
-        // select all rects within the current svg
+        // select, re-beind data, assign transition effects and update 'x' for all rects within the current svg
         activeSVG.selectAll("rect")
+        // rebind the data
+        .data(currentDataset, (function(d) {
+            return d.time_period + "-" + d.country_code;
+        }))
         // smooth transition
         .transition()
         .delay(function(d, i){
             return i * 25;
         })
         .duration(250)
+        // update x location
         .attr("x", function(d, i) {
         return xScale(d.time_period + "-" + d.country_code);
         });
 
-        // Transition x-axis as well
-        activeSVG.select(".x.axis")
-            .transition()
-            .duration(1000)
-            .call(d3.axisBottom(xScale));
-
+        // select the x-axis within the current svg
+        activeSVG.select(".x-axis")
+        // transition animations/smoothing
+        .transition()
+        .duration(250)
+        // update x-axis by calling it again (after assigning new xScale)
+        .call(d3.axisBottom(xScale));
     }
 
 }
