@@ -211,6 +211,7 @@ function init () {
                 return h - padding - yScale(d.unit_value);
             })
 
+        // call to add a button, (runs for each chart to create three buttons)
         addChartButton(chartID, dataset);
     }
 
@@ -229,7 +230,8 @@ function init () {
             }
         );
     }
-    // (SHOW CHART FUNCTION) hides all svg charts and displays one
+
+    // (SHOW CHART) hides all svg charts and displays one
     function showChart(chartID, chartData) {
         // hide all charts
         d3.selectAll(".svg-div")
@@ -269,7 +271,7 @@ function init () {
         sortBars(currentChartData);
         }
     );
-    // (SORT FUNCTION) sort bars in a specific order (ascending/descending), takes boolean parameter (sortOrder)
+    // (SORT FUNCTION) sort bars in a specific order (ascending/descending)
     function sortBars(chartData) {
         // select the svg with the current active chart
         activeSVG = d3.select("#" + currentChartID).select("svg");
