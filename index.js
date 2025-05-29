@@ -17,13 +17,13 @@ function init () {
     // var to hold the currently selected chart's id
     var currentChartID;
     // array variables to hold sort orders of charts
-    var sortedChartSortOrder = [];
+    var currentSortOrder = [];
     var unsortedChartOrder = [];
     
-    /*
+    
     // (DATASET) default dataset for testing
     var dataset = [22, 10, 2, 19, 9, 15, 18, 12, 15, 6, 21, 8];
-    */
+    
 
     // use 'Promise' to load multiple csv files
     Promise.all([
@@ -62,42 +62,51 @@ function init () {
         })
     ]).then(function(data){
         // (DATA) assign 'data' array to 'dataset' variable
-        // e.g. dataset[0]= doctors.csv | dataset[1]= nurses.csv | dataset[2]= mortality.csv
         dataset = data;
-
+        var doctors = dataset[0];
+        var nurses = dataset[1];
+        var mortality = dataset[2];
         // INSERT CHART FUNCTIONS HERE!!!
 
         // (DOCTORS) CHART
+
+        /*
         // the anonymous function accesses a specific column from a single data file specified by [0], [1], [2], 
         // .map returns the anonymous function's result as a new array before assigning it to a variable
         var doctorValues = dataset[0].map(function(d) {
             return d.unit_value;
         });
-        var doctorYears = dataset[0].map(function(d) {
-            return d.time_period;
-        });
+        */
+
         // log in console to check if it works
-        console.log(doctorValues);
+        console.log(doctors);
         // draw chart for doctors
-        drawChart(doctorValues, "Doctors", doctorChartTitle);
+        drawChart(doctors, "Doctors", doctorChartTitle);
 
         // (NURSES) CHART
+        /*
         var nurseValues = dataset[1].map(function(d) {
             return d.unit_value;
         });
+        */
+
+
         // log in console to check if it works
-        console.log(nurseValues);
+        console.log(nurses);
         // draw chart for nurses
-        drawChart(nurseValues, "Nurses", nurseChartTitle);
+        drawChart(nurses, "Nurses", nurseChartTitle);
 
         // (LIFE EXPECTANCY) CHART
+        /*
         var leValues = dataset[2].map(function(d) {
             return d.unit_value;
         });
+        */
+
         // log in console to check if it works
-        console.log(leValues);
+        console.log(mortality);
         // draw chart for life expectancy
-        drawChart(leValues, "Avoidable-Mortality", mortalityChartTitle);
+        drawChart(mortality, "Avoidable-Mortality", mortalityChartTitle);
 
         // print data to the console for each file to check if data is loaded properly
         console.table(dataset[0], ["country_code", "country_name", "time_period", "unit_type", "unit_value", "unit_of_measure"]);
@@ -110,17 +119,29 @@ function init () {
     // function to generate a bar chart for an single dataset, takes three parameters.
     // e.g. drawChart(dataset[0], "doctors.csv", "Doctors")
     function drawChart(dataset, chartID, chartTitle) {
+
+        var countryCode = dataset.map(function(d) {return d.country_code;});
+        var countryName = dataset.map(function(d) {return d.country_name;});
+        var timePeriod = dataset.map(function(d) {return d.time_period;});
+        var unitType = dataset.map(function(d) {return d.unit_type;});
+        var unitValue = dataset.map(function(d) {return d.unit_value;});
+        var unitOfMeasure = dataset.map(function(d) {return d.unit_of_measure;});
+        
         // (SCALES)
         // (X) scale qualitative x axis using data set length (.domain) and a rounded range (.rangeRound)
         xScale = d3.scaleBand()
-            .domain(d3.range(dataset.length))
+            .domain(dataset.map(function(d) {
+                return d.time_period + "-" + d.country_code;
+            }))
             .rangeRound([padding, w])
             .paddingInner(0.05);
 
         // (Y) scale quantitative y axis data set (.domain) to a specific range (.range)
         yScale = d3.scaleLinear()
             // domain range starts from 0 to largest value in dataset
-            .domain([0, d3.max(dataset)])
+            .domain([0, d3.max(dataset.map(function(d) {
+                return d.unit_value;
+            }))])
             .range([h - padding, padding]);
 
         // (SVG CANVAS) 
@@ -151,17 +172,23 @@ function init () {
             // reference 'g' element for adding axis
         svg.append("g")
             // class id 'axis' for styling
-            .attr("class", "x axis") 
+            .attr("class", "x-axis") 
             // moves axis to bottom of chart using transform, translate(x, y)
             .attr("transform", "translate(0, "+ (h - padding) +")")
-            .call(xAxis);
-
+            .call(xAxis)
+            // rotate labels
+            .selectAll("text")
+            .style("text-anchor", "end")
+            .attr("transform", "rotate(-55)")
+            .attr("dx", "-0.8em")
+            .attr("dy", "0.15em");
+            
         // (Y-AXIS)
         var yAxis = d3.axisLeft()
             // use same yScaling as chart
             .scale(yScale);
         svg.append("g")
-            .attr("class", "y axis")
+            .attr("class", "y-axis")
             // moves axis to left of chart using transform, translate(x, y)
             .attr("transform", "translate(" + padding + ",0)")
             .call(yAxis);
@@ -175,17 +202,17 @@ function init () {
             // (RECTANGLE ATTRIBUTES)
             // (X) spread out rect shapes on x axis
             .attr("x", function(d, i) {
-                return  xScale(i);
+                return  xScale(d.time_period + "-" + d.country_code);
             })
             // (Y) make bottom of bars the same height
             .attr("y", function(d, i) {
-                return yScale(d);
+                return yScale(d.unit_value);
             })
             // (WIDTH) calculate width of bars using bandwidth()
             .attr("width", xScale.bandwidth())
             // (HEIGHT) anonymous function to assign bar heights, padding is included due to displaying axis
             .attr("height", function(d, i) {
-                return h - padding - yScale(d);
+                return h - padding - yScale(d.unit_value);
             })
 
         // (CHART BUTTON) adds a chart button to 'buttonDiv'
@@ -215,7 +242,6 @@ function init () {
             // save the initial unsorted order of the datasets
             unsortedChartOrder[chartID] = dataset;
         }
-
     }
 
     // (BUTTONS)
@@ -241,22 +267,29 @@ function init () {
         activeSVG = d3.select("#" + currentChartID).select("svg");
 
         // toggle/change the sort order for the current chart
-        sortedChartSortOrder[currentChartID] = !sortedChartSortOrder[currentChartID];
+        currentSortOrder[currentChartID] = !currentSortOrder[currentChartID];
         // create a variable from the toggled sort order of the current chart
-        newSortOrder = sortedChartSortOrder[currentChartID];
+        newSortOrder = currentSortOrder[currentChartID];
 
-        // select all rects within the current svg
-        activeSVG.selectAll("rect")
-        // sort bars
-        .sort(function(a, b) {
+        // sort bars for current chart
+        var currentDataset = unsortedChartOrder[currentChartID];
+        currentDataset.sort(function(a, b) {
             // change sort order based on the new toggled sort order
             if (newSortOrder) {
-                return (d3.ascending(a, b));
+                return (d3.ascending(a.unit_value, b.unit_value));
             } else {
-                return (d3.descending(a, b));
+                return (d3.descending(a.unit_value, b.unit_value));
             }
         })
 
+        // update the xScale with new sorted dataset
+        newXScale = currentDataset.map(function(d) {
+            return d.time_period + "-" + d.country_code;
+        })
+        xScale.domain(newXScale);
+
+        // select all rects within the current svg
+        activeSVG.selectAll("rect")
         // smooth transition
         .transition()
         .delay(function(d, i){
@@ -264,8 +297,15 @@ function init () {
         })
         .duration(250)
         .attr("x", function(d, i) {
-        return xScale(i);
+        return xScale(d.time_period + "-" + d.country_code);
         });
+
+        // Transition x-axis as well
+        activeSVG.select(".x.axis")
+            .transition()
+            .duration(1000)
+            .call(d3.axisBottom(xScale));
+
     }
 
 }
