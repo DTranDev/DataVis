@@ -9,6 +9,12 @@ function init () {
     var yScale;
     var svg;
 
+    // variable to hold formatting of x-axis labels
+    // e.g. (2016-AUS)
+    var xAxisLabels = function(d) {
+            return d.time_period + "-" + d.country_code;
+        };
+
     // Chart titles (Customise chart titles here)
     var doctorChartTitle = "Doctors Chart";
     var nurseChartTitle = "Nurses Chart";
@@ -16,10 +22,13 @@ function init () {
 
     // var to hold the currently selected chart's id
     var currentChartID;
+    // var to hold a copy of the current chart's data
+    var currentChartData;
     // array variables to hold sort orders of charts
     var currentSortOrder = [];
+    // holds a copy of the original data order for manipulation purposes
+    // possibily add a button to unsort the data?
     var unsortedChartOrder = [];
-    
     
     // (DATASET) default dataset for testing
     var dataset = [22, 10, 2, 19, 9, 15, 18, 12, 15, 6, 21, 8];
@@ -65,6 +74,7 @@ function init () {
         var doctorsData = dataset[0];
         var nursesData = dataset[1];
         var mortalityData = dataset[2];
+
         // INSERT CHART FUNCTIONS HERE!!!
 
         // (DOCTORS) CHART
@@ -98,6 +108,9 @@ function init () {
         console.table(dataset[1], ["country_code", "country_name", "time_period", "unit_type", "unit_value", "unit_of_measure"]);
         console.table(dataset[2], ["country_code", "country_name", "time_period", "unit_type", "unit_value", "unit_of_measure"]);
 
+        // show doctor chart by default
+        showChart("Doctors", doctorsData);
+
     });
 
     // (DRAW CHART)
@@ -105,22 +118,17 @@ function init () {
     // e.g. drawChart(doctors, "Doctors", "doctors.csv")
     function drawChart(dataset, chartID, chartTitle) {
 
-        // show doctor chart by default
-        showChart("Doctors");
-
         var countryCode = dataset.map(function(d) {return d.country_code;});
         var countryName = dataset.map(function(d) {return d.country_name;});
         var timePeriod = dataset.map(function(d) {return d.time_period;});
         var unitType = dataset.map(function(d) {return d.unit_type;});
         var unitValue = dataset.map(function(d) {return d.unit_value;});
         var unitOfMeasure = dataset.map(function(d) {return d.unit_of_measure;});
-        
+
         // (SCALES)
         // (X) scale qualitative x axis using data set length (.domain) and a rounded range (.rangeRound)
         xScale = d3.scaleBand()
-            .domain(dataset.map(function(d) {
-                return d.time_period + "-" + d.country_code;
-            }))
+            .domain(dataset.map(xAxisLabels))
             .rangeRound([padding, w])
             .paddingInner(0.05);
 
@@ -164,7 +172,7 @@ function init () {
             // moves axis to bottom of chart using transform, translate(x, y)
             .attr("transform", "translate(0, "+ (h - padding) +")")
             .call(xAxis)
-            // rotate labels
+            // style and rotate labels
             .selectAll("text")
             .style("text-anchor", "end")
             .attr("transform", "rotate(-55)")
@@ -190,7 +198,7 @@ function init () {
             // (RECTANGLE ATTRIBUTES)
             // (X) spread out rect shapes on x axis
             .attr("x", function(d, i) {
-                return  xScale(d.time_period + "-" + d.country_code);
+                return  xScale(xAxisLabels(d));
             })
             // (Y) make bottom of bars the same height
             .attr("y", function(d, i) {
@@ -203,7 +211,12 @@ function init () {
                 return h - padding - yScale(d.unit_value);
             })
 
-        // (CHART BUTTON) adds a chart button to 'buttonDiv'
+        addChartButton(chartID, dataset);
+    }
+
+    // (BUTTONS)
+    // (CHART BUTTON) adds a chart button to 'buttonDiv'
+    function addChartButton(chartID, chartData) {
         var chartButton = document.createElement("button")
         chartButton.classList.add("chart-button");
         // (LABEL) button label uses 'chartID' passed when calling the drawChart() function, replacing "-" with spaces because chartID is also assigned to svgDiv id
@@ -212,27 +225,36 @@ function init () {
         // (LISTENER) on click
         d3.select(chartButton)
         .on("click",function() {
-            showChart(chartID);
+            showChart(chartID, chartData);
             }
         );
+    }
+    // (SHOW CHART FUNCTION) hides all svg charts and displays one
+    function showChart(chartID, chartData) {
+        // hide all charts
+        d3.selectAll(".svg-div")
+        .style("display", "none");
+        // show this specific chart
+        d3.select ("#" + chartID)
+        .style("display", "block");
 
-        // hides all svg charts and displays one
-        function showChart(chartID) {
-            // hide all charts
-            d3.selectAll(".svg-div")
-            .style("display", "none");
-            // show this specific chart
-            d3.select ("#" + chartID)
-            .style("display", "block");
+        // assign the active chart's id to the current chart variable
+        currentChartID = chartID;
+        currentChartData = chartData;
 
-            // assign the active chart's id to the current chart variable
-            currentChartID = chartID;
-            // save the initial unsorted order of the datasets
-            unsortedChartOrder[chartID] = dataset;
-        }
+        // saves a copy of the original data order for restoration purposes
+        unsortedChartOrder[chartID] = dataset.map(function(d) {
+            return {
+            country_code: d.country_code,
+            country_name: d.country_name,
+            time_period: +d.time_period,
+            unit_type: d.unit_type,
+            unit_value: +d.unit_value,
+            unit_of_measure: d.unit_of_measure
+            };
+        });
     }
 
-    // (BUTTONS)
     // (SORT BUTTON) adds a sort button to 'buttonDiv'
     var sortButton = document.createElement("button")
     sortButton.id = ("sortButton");
@@ -243,14 +265,12 @@ function init () {
     d3.select("#sortButton")
     // change sortOrder boolean and call sortBars()
     .on("click",function() {
-        sortBars();
+        // pass in data from the current chart to be copied and sorted
+        sortBars(currentChartData);
         }
     );
-
-    // (FUNCTIONS)
     // (SORT FUNCTION) sort bars in a specific order (ascending/descending), takes boolean parameter (sortOrder)
-    function sortBars() {
-
+    function sortBars(chartData) {
         // select the svg with the current active chart
         activeSVG = d3.select("#" + currentChartID).select("svg");
 
@@ -259,9 +279,10 @@ function init () {
         // create a variable from the toggled sort order of the current chart
         newSortOrder = currentSortOrder[currentChartID];
 
-        // sort bars for current chart
-        var currentDataset = unsortedChartOrder[currentChartID];
-        currentDataset.sort(function(a, b) {
+        // create a variable/copy from the current chart data for sorting
+        var currentDataset = chartData;
+        // sort the copied data
+        chartData.sort(function(a, b) {
             // change sort order based on the new toggled sort order
             if (newSortOrder) {
                 return (d3.ascending(a.unit_value, b.unit_value));
@@ -270,19 +291,15 @@ function init () {
             }
         })
 
-        // update the xScale with new sorted dataset
-        newXScale = currentDataset.map(function(d) {
-            return d.time_period + "-" + d.country_code;
-        })
+        // update the xScale with new sorted data
+        newXScale = currentDataset.map(xAxisLabels)
         xScale.domain(newXScale);
 
         // select, re-beind data, assign transition effects and update 'x' for all rects within the current svg
         activeSVG.selectAll("rect")
         // rebind the data
-        .data(currentDataset, (function(d) {
-            return d.time_period + "-" + d.country_code;
-        }))
-        // apply transition animations/smoothing
+        .data(currentDataset, xAxisLabels)
+        // smooth transition
         .transition()
         .delay(function(d, i){
             return i * 25;
@@ -290,15 +307,15 @@ function init () {
         .duration(250)
         // update x location
         .attr("x", function(d, i) {
-        return xScale(d.time_period + "-" + d.country_code);
+        return xScale(xAxisLabels(d));
         });
 
         // select the x-axis within the current svg
         activeSVG.select(".x-axis")
-        // apply transition animations/smoothing
+        // transition animations/smoothing
         .transition()
         .duration(250)
-        // update x-axis by calling it again (after re-assigning the xScale)
+        // update x-axis by calling it again (after re- assigning xScale)
         .call(d3.axisBottom(xScale));
     }
 
