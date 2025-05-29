@@ -73,6 +73,9 @@ function init () {
         var doctorValues = dataset[0].map(function(d) {
             return d.unit_value;
         });
+        var doctorYears = dataset[0].map(function(d) {
+            return d.time_period;
+        });
         // log in console to check if it works
         console.log(doctorValues);
         // draw chart for doctors
