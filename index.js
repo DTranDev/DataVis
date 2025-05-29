@@ -23,9 +23,8 @@ function init () {
     
     // (DATASET) default dataset for testing
     var dataset = [22, 10, 2, 19, 9, 15, 18, 12, 15, 6, 21, 8];
-    
 
-    // use 'Promise' to load multiple csv files
+    // 'Promise' to load multiple csv files
     Promise.all([
         // Load in doctors dataset using D3 and read six columns
         d3.csv("datasets/data_doctors.csv", function(d) {
@@ -63,13 +62,12 @@ function init () {
     ]).then(function(data){
         // (DATA) assign 'data' array to 'dataset' variable
         dataset = data;
-        var doctors = dataset[0];
-        var nurses = dataset[1];
-        var mortality = dataset[2];
+        var doctorsData = dataset[0];
+        var nursesData = dataset[1];
+        var mortalityData = dataset[2];
         // INSERT CHART FUNCTIONS HERE!!!
 
         // (DOCTORS) CHART
-
         /*
         // anonymous function accesses a specific column from a single data file specified by [0], [1], [2], 
         // .map returns the anonymous function's result as a new array before assigning it to a variable
@@ -79,21 +77,21 @@ function init () {
         */
 
         // log in console to check if it works
-        console.log(doctors);
+        console.log(doctorsData);
         // draw chart for doctors
-        drawChart(doctors, "Doctors", doctorChartTitle);
+        drawChart(doctorsData, "Doctors", doctorChartTitle);
 
         // (NURSES) CHART
         // log in console to check if it works
-        console.log(nurses);
+        console.log(nursesData);
         // draw chart for nurses
-        drawChart(nurses, "Nurses", nurseChartTitle);
+        drawChart(nursesData, "Nurses", nurseChartTitle);
 
         // (LIFE EXPECTANCY) CHART
         // log in console to check if it works
-        console.log(mortality);
+        console.log(mortalityData);
         // draw chart for life expectancy
-        drawChart(mortality, "Avoidable-Mortality", mortalityChartTitle);
+        drawChart(mortalityData, "Avoidable-Mortality", mortalityChartTitle);
 
         // print data to the console for each file to check if data is loaded properly
         console.table(dataset[0], ["country_code", "country_name", "time_period", "unit_type", "unit_value", "unit_of_measure"]);
@@ -104,7 +102,7 @@ function init () {
 
     // (DRAW CHART)
     // function to generate a bar chart for an single dataset, takes three parameters.
-    // e.g. drawChart(dataset[0], "doctors.csv", "Doctors")
+    // e.g. drawChart(doctors, "Doctors", "doctors.csv")
     function drawChart(dataset, chartID, chartTitle) {
 
         // show doctor chart by default
