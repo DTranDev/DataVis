@@ -282,7 +282,7 @@ function init () {
         .data(currentDataset, (function(d) {
             return d.time_period + "-" + d.country_code;
         }))
-        // smooth transition
+        // apply transition animations/smoothing
         .transition()
         .delay(function(d, i){
             return i * 25;
@@ -295,10 +295,10 @@ function init () {
 
         // select the x-axis within the current svg
         activeSVG.select(".x-axis")
-        // transition animations/smoothing
+        // apply transition animations/smoothing
         .transition()
         .duration(250)
-        // update x-axis by calling it again (after assigning new xScale)
+        // update x-axis by calling it again (after re-assigning the xScale)
         .call(d3.axisBottom(xScale));
     }
 
