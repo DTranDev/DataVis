@@ -14,7 +14,7 @@ button {
 
 footer {
     color: grey;
-    background: rgb(240, 240, 240);
+    background: blue;
 }
 
 /* Navigation Bar Css */
@@ -64,19 +64,39 @@ body {
 
 
 
-
-.formRow input, 
-.formRow textarea {
-    margin-left: 5px;
-    padding: 6px;
-    font-size: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-    width: 100%;
-    max-width: 400px;
+.formRow {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px; /* Adds vertical spacing between form rows */
 }
+
+.formRow label {
+    min-width: 150px; /* Reserve space for labels */
+    margin-right: 10px;
+    text-align: right;
+}
+
+
 
 .formRow.textareaRow {
     align-items: flex-start;
+}
+
+/* CSS */
+.formContainer {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 50px;
+   
+   
+}
+
+form fieldset {
+    border: 1px solid #ccc;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.submit {
+    margin-right: 10px;
 }
