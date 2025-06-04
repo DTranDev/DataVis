@@ -1,21 +1,20 @@
 body, .x.axis, .y.axis, button {
     font-family: Arial, Helvetica, sans-serif;
     text-align: center;
-    background-color: #eef1f6;
 }
 
 button {
     margin: 0.5em;
 }
 
-#factsSectionDiv {
-    background: #e2e6ec;
+#factsSectionDiv, footer {
+    background: rgb(243, 243, 243);
+    
 }
 
 footer {
-    color: white;
-    background: #0066ff;
-    padding: 30px;
+    color: grey;
+    background: blue;
 }
 
 /* Navigation Bar Css */
@@ -26,7 +25,7 @@ body {
 }
 
 .navbar {
-    background-color: #0066ff;
+    background-color: blue;
     padding: 20px;
 }
 
@@ -52,6 +51,7 @@ body {
     text-decoration: underline;
 }
 
+
 #image {
     display: flex;
     float: right;
@@ -61,22 +61,42 @@ body {
     height: auto;
 }
 
-#contactForm {
+
+
+
+.formRow {
     display: flex;
+    align-items: center;
+    margin-bottom: 20px; /* Adds vertical spacing between form rows */
 }
 
-.formRow input, 
-.formRow textarea {
-    margin-left: 5px;
-    padding: 6px;
-    font-size: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-    width: 100%;
-    max-width: 400px;
+.formRow label {
+    min-width: 150px; /* Reserve space for labels */
+    margin-right: 10px;
+    text-align: right;
 }
+
+
 
 .formRow.textareaRow {
     align-items: flex-start;
+}
+
+/* CSS */
+.formContainer {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 50px;
+   
+   
+}
+
+form fieldset {
+    border: 1px solid #ccc;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.submit {
+    margin-right: 10px;
 }
