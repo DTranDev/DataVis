@@ -60,3 +60,23 @@ body {
     max-width: 400px;
     height: auto;
 }
+
+
+
+
+
+.formRow input, 
+.formRow textarea {
+    margin-left: 5px;
+    padding: 6px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 400px;
+}
+
+.formRow.textareaRow {
+    align-items: flex-start;
+}

@@ -28,7 +28,42 @@
         </nav>
     </div>
     
-    <p>The following data visulation website was designed and developed by Cong Thuyet Nguyen and Danny Tran</p>
+    <p>The following data visulation website was designed by Cong Thuyet Nguyen developed by Danny Tran</p>
+    <h2>Cong Thuyet Nguyen (Front-End Designer)</h2>
+    <p>Cong is a student studying at Swinburne University of Technology with Bachelor of Information and Communication Technology majoring in Networking.</p>
+    <h2>Danny Tran(Back-End Developer)</h2>
+    <p>Danny is also a student studying at Swinburne University of Technology with Bachelor of Information and Communication Technlogy majoring in Software Development.</p>
+
+    <form action="signup.php" method="POST" name="sForm">
+    <fieldset>
+        <legend><strong>Contact Us Page</strong></legend>
+
+        <!-- Name -->
+        <div class="formRow">
+            <label for="inputName">Name:</label>
+            <input type="text" id="inputName" name="inputName" maxlength="40" required>
+        </div>
+
+        <!-- Email -->
+        <div class="formRow">
+            <label for="inputEmail">Email:</label>
+            <input type="email" id="inputEmail" name="inputEmail" maxlength="40" required>
+        </div>
+
+         <div class="formRow textareaRow">
+        <label for="description">Description Message:</label>
+        <textarea id="description" name="description" rows="5" cols="50"></textarea>
+        </div>
+
+        <!-- Submit & Reset -->
+        <div class="formRow">
+            <input type="submit" class="submit" value="Submit">
+            <input type="reset" class="reset" value="Clear">
+        </div>
+    </fieldset>
+</form>
+
+    
 
     <footer>cos30045 Data Visualisation<br>
     Cong Thuyet Nguyen, Danny Tran</footer>
