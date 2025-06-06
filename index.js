@@ -2,13 +2,10 @@ function init () {
 
     // (VARIABLES)
     // svg variables
+    var svg;
     var h= 600;
     var w= 1000;
     var padding = 50;
-
-    var chartScales = [];
-
-    var svg;
 
     // obtain div id from html document
     var buttonDiv = document.getElementById("buttonDiv");
@@ -32,6 +29,11 @@ function init () {
     var currentSortOrder = [];
     // holds a copy of the original data order for manipulation purposes
     var unsortedChartOrder = [];
+    var chartScales = [];
+
+    // holds a collection of unique country_codes
+    var setOfCountryCodes = new Set();
+    var barColour; 
     
     // (DATASET) default dataset for testing
     var dataset = [22, 10, 2, 19, 9, 15, 18, 12, 15, 6, 21, 8];
@@ -88,6 +90,18 @@ function init () {
             return d.unit_value;
         });
         */
+
+        // get the country codes of each dataset and add to store in array
+        [doctorsData, nursesData, mortalityData].forEach(function(chartData) {
+            chartData.forEach(function(d, i) {
+                setOfCountryCodes.add(d.country_code);
+            });
+        });
+
+        // basic d3 native scheme colour scale
+        barColour = d3.scaleOrdinal()
+        .domain(Array.from(setOfCountryCodes))
+        .range(d3.schemeCategory10);
 
         // log in console to check if it works
         console.log(doctorsData);
@@ -221,6 +235,9 @@ function init () {
             // (HEIGHT) anonymous function to assign bar heights, padding is included due to displaying axis
             .attr("height", function(d, i) {
                 return h - padding - yScale(d.unit_value);
+            })
+            .attr("fill", function (d, i) {
+                return barColour(d.country_code);
             })
 
         // saves a copy of the original data order for restoration purposes
