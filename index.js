@@ -31,7 +31,6 @@ function init () {
     // array variables to hold sort orders of charts
     var currentSortOrder = [];
     // holds a copy of the original data order for manipulation purposes
-    // possibily add a button to unsort the data?
     var unsortedChartOrder = [];
     
     // (DATASET) default dataset for testing
