@@ -31,8 +31,8 @@ function init () {
     var unsortedChartOrder = [];
     var chartScales = [];
 
-    // holds a collection of unique country_codes
-    var setOfCountryCodes = new Set();
+    // holds a collection of unique country_names for labelling chart legend
+    var setOfCountryNames = new Map();
     var barColour; 
     
     // (DATASET) default dataset for testing
@@ -82,25 +82,16 @@ function init () {
 
         // INSERT CHART FUNCTIONS HERE!!!
 
-        // (DOCTORS) CHART
-        /*
-        // anonymous function accesses a specific column from a single data file specified by [0], [1], [2], 
-        // .map returns the anonymous function's result as a new array before assigning it to a variable
-        var doctorValues = dataset[0].map(function(d) {
-            return d.unit_value;
-        });
-        */
-
-        // get the country codes of each dataset and add to store in array
+        // get the country name of each dataset and set to store in map in place of their respective country_codes
         [doctorsData, nursesData, mortalityData].forEach(function(chartData) {
             chartData.forEach(function(d, i) {
-                setOfCountryCodes.add(d.country_code);
+                setOfCountryNames.set(d.country_name);
             });
         });
 
         // basic d3 native scheme colour scale
         barColour = d3.scaleOrdinal()
-        .domain(Array.from(setOfCountryCodes))
+        .domain(Array.from(setOfCountryNames))
         .range(d3.schemeCategory10);
 
         // log in console to check if it works
@@ -254,6 +245,42 @@ function init () {
 
         // call to add a button, (runs for each chart to create three buttons)
         addChartButton(chartID, dataset);
+
+        // create the legend once when loading first default chart
+        if (chartID == "Doctors") { 
+
+            // obtain legend div
+            var legendDiv = d3.select("#legendDiv");
+            // clear existing legends
+            legendDiv.select("#legendDiv").remove();
+
+            // add a div for legend
+            var chartLegend = legendDiv
+                .append("div")
+                .attr("id", "chartLegend")
+
+            // assign values for legend labels
+            var legendLabels = Array.from(setOfCountryNames);
+
+            // add a legend into the div
+            chartLegend.selectAll(".legendLabel")
+                .data(legendLabels)
+                .enter()
+                .append("div")
+                .attr("class", "legendLabel")
+                .each(function(d) {
+                    // format a square colour box for each label
+                    var item = d3.select(this);
+                    item.append("span")
+                        .style("background-color", barColour(d))
+                        .style("display", "inline-block")
+                        .style("width", "15px")
+                        .style("height", "15px")
+                        .style("margin-right", "7px");
+                    // add the text for the label
+                    item.append("span").text(d);
+                });
+        }
     }
 
     // (BUTTONS)
