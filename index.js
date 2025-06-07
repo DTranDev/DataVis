@@ -258,11 +258,12 @@ function init () {
             // on mousemove, 
             .on("mousemove", function(event, d) {
                 d3.select(".tooltipDiv")
+                // stated again to follow the mouse
                 .style("left", (event.pageX + 15) + "px")
                 .style("top", (event.pageY - 90) + "px");
             })
 
-            // on mouseout,
+            // on mouseout, hide bar highlight strokes and hide tooltip
             .on("mouseout", function(event, d) {
                 d3.select(this)
                 .style("stroke", "white")
