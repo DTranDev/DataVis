@@ -71,23 +71,26 @@ body {
     min-width: 150px; /* Reserve space for labels */
     margin-right: 10px;
     text-align: right;
+    align-items: top;
+    
 }
 
-.formRow.textareaRow {
+.formRow .textareaRow {
     align-items: flex-start;
 }
 
 /* CSS */
-.formContainer {
-    max-width: 1000px;
-    margin: 0 auto;
+.formContainer, #studentProfiles {
     padding: 50px;
+    display: flex;
+    justify-content: center;
 }
 
 form fieldset {
     border: 1px solid #ccc;
     padding: 20px;
     border-radius: 8px;
+    max-width: 500px;
 }
 
 .submit {
