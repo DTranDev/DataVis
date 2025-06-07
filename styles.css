@@ -71,8 +71,6 @@ body {
     min-width: 150px; /* Reserve space for labels */
     margin-right: 10px;
     text-align: right;
-    align-items: top;
-    
 }
 
 .formRow .textareaRow {
