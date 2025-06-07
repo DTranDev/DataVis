@@ -16,6 +16,12 @@ function init () {
             return d.time_period + "-" + d.country_code;
         };
 
+    // (TOOLTIP) Create tooltip div (initially hidden)
+    var tooltip = d3.select("#chartDiv")
+        .append("div")
+        .attr("class", "tooltipDiv")
+        .style("opacity", 0);
+
     // Chart titles (Customise chart titles here)
     var doctorChartTitle = "Doctors Chart";
     var nurseChartTitle = "Nurses Chart";
@@ -128,13 +134,6 @@ function init () {
 
         var xScale;
         var yScale;
-        
-        var countryCode = dataset.map(function(d) {return d.country_code;});
-        var countryName = dataset.map(function(d) {return d.country_name;});
-        var timePeriod = dataset.map(function(d) {return d.time_period;});
-        var unitType = dataset.map(function(d) {return d.unit_type;});
-        var unitValue = dataset.map(function(d) {return d.unit_value;});
-        var unitOfMeasure = dataset.map(function(d) {return d.unit_of_measure;});
 
         // (SCALES)
         // (X) scale qualitative x axis using data set length (.domain) and a rounded range (.rangeRound)
@@ -229,6 +228,48 @@ function init () {
             })
             .attr("fill", function (d, i) {
                 return barColour(d.country_code);
+            })
+
+            // mouseover effects 
+            .on("mouseover", function(event, d) {
+                d3.select(this)
+                .style("stroke", "black")
+                .style("stroke-width", 2)
+                .style("fill-opacity", 1.0)
+
+                d3.select(".tooltipDiv")
+                // unhide tooltip
+                .style("opacity", 0.8)
+
+                // formatting for tooltip
+                tooltip.html(
+                    "<p><strong>Country:</strong> " + d.country_name + "<br/>"+
+                    "<strong>Code:</strong> " + d.country_code + "<br/>"+
+                    "<strong>Year:</strong> " + d.time_period + "<br/>"+
+                    "<strong>Value:</strong> " + d.unit_value + " " + d.unit_of_measure + "<br/>"+
+                    "<strong>Type:</strong> " + d.unit_type + "</p>"
+                )
+
+                // position tooltip relative to the mouse
+                .style("left", (event.pageX + 15) + "px")
+                .style("top", (event.pageY - 90) + "px");
+            })
+
+            // on mousemove, 
+            .on("mousemove", function(event, d) {
+                d3.select(".tooltipDiv")
+                .style("left", (event.pageX + 15) + "px")
+                .style("top", (event.pageY - 90) + "px");
+            })
+
+            // on mouseout,
+            .on("mouseout", function(event, d) {
+                d3.select(this)
+                .style("stroke", "white")
+                .style("stroke-width", 0)
+
+                d3.select(".tooltipDiv")
+                .style("opacity", 0);
             })
 
         // saves a copy of the original data order for restoration purposes

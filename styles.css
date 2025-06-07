@@ -112,3 +112,17 @@ form fieldset {
     padding: 15px;
     gap: 15px;
 }
+.tooltip {
+    position: relative;
+}
+
+.tooltipDiv {
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+    padding-right: 10px;
+    position: absolute;
+    background-color: rgb(201, 199, 199);
+    border-radius: 4px;
+    text-align: center;
+}
