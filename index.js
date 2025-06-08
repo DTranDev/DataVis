@@ -37,8 +37,9 @@ function init () {
     var unsortedChartOrder = [];
     var chartScales = [];
 
-    // holds a collection of unique country_names for labelling chart legend
-    var setOfCountryNames = new Map();
+    // holds a collection of unique country_names for labeling chart legend 
+    // (change to map() if need to assign new values via a function)
+    var setOfCountryNames = new Set();
     var barColour; 
     
     // (DATASET) default dataset for testing
@@ -91,7 +92,7 @@ function init () {
         // get the country name of each dataset and set to store in map in place of their respective country_codes
         [doctorsData, nursesData, mortalityData].forEach(function(chartData) {
             chartData.forEach(function(d, i) {
-                setOfCountryNames.set(d.country_name);
+                setOfCountryNames.add(d.country_name);
             });
         });
 
