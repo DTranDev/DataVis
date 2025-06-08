@@ -2,18 +2,25 @@ function init () {
 
     // (VARIABLES)
     // svg variables
+    var svg;
     var h= 600;
     var w= 1000;
     var padding = 50;
-    var xScale;
-    var yScale;
-    var svg;
+
+    // obtain div id from html document
+    var buttonDiv = document.getElementById("buttonDiv");
 
     // variable to hold formatting of x-axis labels
     // e.g. (2016-AUS)
     var xAxisLabels = function(d) {
             return d.time_period + "-" + d.country_code;
         };
+
+    // (TOOLTIP) Create tooltip div (initially hidden)
+    var tooltip = d3.select("#chartDiv")
+        .append("div")
+        .attr("class", "tooltipDiv")
+        .style("opacity", 0);
 
     // Chart titles (Customise chart titles here)
     var doctorChartTitle = "Doctors Chart";
@@ -27,8 +34,13 @@ function init () {
     // array variables to hold sort orders of charts
     var currentSortOrder = [];
     // holds a copy of the original data order for manipulation purposes
-    // possibily add a button to unsort the data?
     var unsortedChartOrder = [];
+    var chartScales = [];
+
+    // holds a collection of unique country_names for labeling chart legend 
+    // (change to map() if need to assign new values via a function)
+    var setOfCountryNames = new Set();
+    var barColour; 
     
     // (DATASET) default dataset for testing
     var dataset = [22, 10, 2, 19, 9, 15, 18, 12, 15, 6, 21, 8];
@@ -77,14 +89,17 @@ function init () {
 
         // INSERT CHART FUNCTIONS HERE!!!
 
-        // (DOCTORS) CHART
-        /*
-        // anonymous function accesses a specific column from a single data file specified by [0], [1], [2], 
-        // .map returns the anonymous function's result as a new array before assigning it to a variable
-        var doctorValues = dataset[0].map(function(d) {
-            return d.unit_value;
+        // get the country name of each dataset and set to store in map in place of their respective country_codes
+        [doctorsData, nursesData, mortalityData].forEach(function(chartData) {
+            chartData.forEach(function(d, i) {
+                setOfCountryNames.add(d.country_name);
+            });
         });
-        */
+
+        // basic d3 native scheme colour scale
+        barColour = d3.scaleOrdinal()
+        .domain(Array.from(setOfCountryNames))
+        .range(d3.schemeCategory10);
 
         // log in console to check if it works
         console.log(doctorsData);
@@ -118,12 +133,8 @@ function init () {
     // e.g. drawChart(doctors, "Doctors", "doctors.csv")
     function drawChart(dataset, chartID, chartTitle) {
 
-        var countryCode = dataset.map(function(d) {return d.country_code;});
-        var countryName = dataset.map(function(d) {return d.country_name;});
-        var timePeriod = dataset.map(function(d) {return d.time_period;});
-        var unitType = dataset.map(function(d) {return d.unit_type;});
-        var unitValue = dataset.map(function(d) {return d.unit_value;});
-        var unitOfMeasure = dataset.map(function(d) {return d.unit_of_measure;});
+        var xScale;
+        var yScale;
 
         // (SCALES)
         // (X) scale qualitative x axis using data set length (.domain) and a rounded range (.rangeRound)
@@ -139,6 +150,12 @@ function init () {
                 return d.unit_value;
             }))])
             .range([h - padding, padding]);
+
+        // create an associative array and store current x,y scales in chartScales
+        chartScales[chartID] = {
+            xScale: xScale,
+            yScale: yScale
+        };
 
         // (SVG CANVAS) 
         // svgDiv var holding selection of #chart-location with an added div
@@ -210,9 +227,103 @@ function init () {
             .attr("height", function(d, i) {
                 return h - padding - yScale(d.unit_value);
             })
+            .attr("fill", function (d, i) {
+                return barColour(d.country_code);
+            })
+
+            // mouseover effects 
+            .on("mouseover", function(event, d) {
+                d3.select(this)
+                .style("stroke", "black")
+                .style("stroke-width", 2)
+                .style("fill-opacity", 1.0)
+
+                d3.select(".tooltipDiv")
+                // unhide tooltip
+                .style("opacity", 0.8)
+
+                // formatting for tooltip
+                tooltip.html(
+                    "<p><strong>Country:</strong> " + d.country_name + "<br/>"+
+                    "<strong>Code:</strong> " + d.country_code + "<br/>"+
+                    "<strong>Year:</strong> " + d.time_period + "<br/>"+
+                    "<strong>Value:</strong> " + d.unit_value + " " + d.unit_of_measure + "<br/>"+
+                    "<strong>Type:</strong> " + d.unit_type + "</p>"
+                )
+
+                // position tooltip relative to the mouse
+                .style("left", (event.pageX + 15) + "px")
+                .style("top", (event.pageY - 90) + "px");
+            })
+
+            // on mousemove, 
+            .on("mousemove", function(event, d) {
+                d3.select(".tooltipDiv")
+                // stated again to follow the mouse
+                .style("left", (event.pageX + 15) + "px")
+                .style("top", (event.pageY - 90) + "px");
+            })
+
+            // on mouseout, hide bar highlight strokes and hide tooltip
+            .on("mouseout", function(event, d) {
+                d3.select(this)
+                .style("stroke", "white")
+                .style("stroke-width", 0)
+
+                d3.select(".tooltipDiv")
+                .style("opacity", 0);
+            })
+
+        // saves a copy of the original data order for restoration purposes
+        unsortedChartOrder[chartID] = dataset.map(function(d) {
+            return {
+            country_code: d.country_code,
+            country_name: d.country_name,
+            time_period: +d.time_period,
+            unit_type: d.unit_type,
+            unit_value: +d.unit_value,
+            unit_of_measure: d.unit_of_measure
+            };
+        });
 
         // call to add a button, (runs for each chart to create three buttons)
         addChartButton(chartID, dataset);
+
+        // create the legend once when loading first default chart
+        if (chartID == "Doctors") { 
+
+            // obtain legend div
+            var legendDiv = d3.select("#legendDiv");
+            // clear existing legends
+            legendDiv.select("#legendDiv").remove();
+
+            // add a div for legend
+            var chartLegend = legendDiv
+                .append("div")
+                .attr("id", "chartLegend")
+
+            // assign values for legend labels
+            var legendLabels = Array.from(setOfCountryNames);
+
+            // add a legend into the div
+            chartLegend.selectAll(".legendLabel")
+                .data(legendLabels)
+                .enter()
+                .append("div")
+                .attr("class", "legendLabel")
+                .each(function(d) {
+                    // format a square colour box for each label
+                    var item = d3.select(this);
+                    item.append("span")
+                        .style("background-color", barColour(d))
+                        .style("display", "inline-block")
+                        .style("width", "15px")
+                        .style("height", "15px")
+                        .style("margin-right", "7px");
+                    // add the text for the label
+                    item.append("span").text(d);
+                });
+        }
     }
 
     // (BUTTONS)
@@ -243,18 +354,6 @@ function init () {
         // assign the active chart's id to the current chart variable
         currentChartID = chartID;
         currentChartData = chartData;
-
-        // saves a copy of the original data order for restoration purposes
-        unsortedChartOrder[chartID] = dataset.map(function(d) {
-            return {
-            country_code: d.country_code,
-            country_name: d.country_name,
-            time_period: +d.time_period,
-            unit_type: d.unit_type,
-            unit_value: +d.unit_value,
-            unit_of_measure: d.unit_of_measure
-            };
-        });
     }
 
     // (SORT BUTTON) adds a sort button to 'buttonDiv'
@@ -271,31 +370,68 @@ function init () {
         sortBars(currentChartData);
         }
     );
-    // (SORT FUNCTION) sort bars in a specific order (ascending/descending)
-    function sortBars(chartData) {
+
+    // (RESET BUTTON) adds a reset button to 'buttonDiv'
+    var resetButton = document.createElement("button")
+    resetButton.id = ("resetButton");
+    // (LABEL) button label
+    resetButton.innerHTML = ("Reset")
+    buttonDiv.appendChild(resetButton)
+    // (LISTENER) on click, sort bars
+    d3.select("#resetButton")
+    // change sortOrder boolean and call sortBars()
+    .on("click",function() {
+
+        // load orignal order of current chart
+        var initialData = unsortedChartOrder[currentChartID];
+        // pass in original data from the current chart to be copied and sorted
+        sortBars(initialData, true);
+        }
+    );
+
+    // (SORT FUNCTION) sort bars in a specific order (ascending/descending) with optional reset parameter
+    function sortBars(chartData, reset = false) {
         // select the svg with the current active chart
         activeSVG = d3.select("#" + currentChartID).select("svg");
 
-        // toggle/change the sort order for the current chart
-        currentSortOrder[currentChartID] = !currentSortOrder[currentChartID];
-        // create a variable from the toggled sort order of the current chart
-        newSortOrder = currentSortOrder[currentChartID];
+        if (!reset) {
+            // toggle/change the sort order for the current chart
+            currentSortOrder[currentChartID] = !currentSortOrder[currentChartID];
+            // create a variable from the toggled sort order of the current chart
+            newSortOrder = currentSortOrder[currentChartID];
+        }
 
         // create a variable/copy from the current chart data for sorting
-        var currentDataset = chartData;
-        // sort the copied data
-        chartData.sort(function(a, b) {
-            // change sort order based on the new toggled sort order
-            if (newSortOrder) {
-                return (d3.ascending(a.unit_value, b.unit_value));
-            } else {
-                return (d3.descending(a.unit_value, b.unit_value));
-            }
-        })
+        currentDataset = chartData.map(function(d) {
+            return {
+                country_code: d.country_code,
+                country_name: d.country_name,
+                time_period: d.time_period,
+                unit_type: d.unit_type,
+                unit_value: d.unit_value,
+                unit_of_measure: d.unit_of_measure
+            };
+        });
 
-        // update the xScale with new sorted data
-        newXScale = currentDataset.map(xAxisLabels)
-        xScale.domain(newXScale);
+        if (!reset) {
+            // sort the copied data
+            currentDataset.sort(function(a, b) {
+                // change sort order based on the new toggled sort order
+                if (newSortOrder) {
+                    return (d3.ascending(a.unit_value, b.unit_value));
+                } else {
+                    return (d3.descending(a.unit_value, b.unit_value));
+                }
+            })
+        }
+        
+        // update the xScale with new sorted data values
+        var sortedXScale = currentDataset.map(xAxisLabels)
+
+        var xScale = chartScales[currentChartID].xScale;
+        var yScale = chartScales[currentChartID].yScale;
+
+        xScale.domain(sortedXScale);
 
         // select, re-beind data, assign transition effects and update 'x' for all rects within the current svg
         activeSVG.selectAll("rect")
@@ -319,6 +455,8 @@ function init () {
         .duration(250)
         // update x-axis by calling it again (after re- assigning xScale)
         .call(d3.axisBottom(xScale));
+
+        currentChartData = currentDataset;
     }
 
 }

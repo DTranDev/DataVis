@@ -61,8 +61,6 @@ body {
     height: auto;
 }
 
-
-
 .formRow {
     display: flex;
     align-items: center;
@@ -75,27 +73,56 @@ body {
     text-align: right;
 }
 
-
-
-.formRow.textareaRow {
+.formRow .textareaRow {
     align-items: flex-start;
 }
 
 /* CSS */
-.formContainer {
-    max-width: 1000px;
-    margin: 0 auto;
+.formContainer, #studentProfiles {
     padding: 50px;
-   
-   
+    display: flex;
+    justify-content: center;
 }
 
 form fieldset {
     border: 1px solid #ccc;
     padding: 20px;
     border-radius: 8px;
+    max-width: 500px;
 }
 
 .submit {
     margin-right: 10px;
+}
+
+/* CHART */
+#chartDiv {
+    display: inline-flex;
+} 
+
+#legendDiv, .legendLabel {
+    display: flex;
+    align-items: center;
+}
+
+#chartLegend {
+    display: flex;
+    flex-direction: column;
+    font-size: 14px;
+    padding: 15px;
+    gap: 15px;
+}
+.tooltip {
+    position: relative;
+}
+
+.tooltipDiv {
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+    padding-right: 10px;
+    position: absolute;
+    background-color: rgb(201, 199, 199);
+    border-radius: 4px;
+    text-align: center;
 }

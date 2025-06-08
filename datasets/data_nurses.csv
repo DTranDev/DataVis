@@ -1,61 +1,61 @@
 country_code,country_name,time_period,unit_type,unit_value,unit_of_measure
-AUS,Australia,2020,Practising nurses,312339,Persons
-AUS,Australia,2019,Practising nurses,307461,Persons
-AUS,Australia,2018,Practising nurses,295324,Persons
-AUS,Australia,2016,Practising nurses,277389,Persons
 AUS,Australia,2015,Practising nurses,268070,Persons
+AUS,Australia,2016,Practising nurses,277389,Persons
 AUS,Australia,2017,Practising nurses,285742,Persons
-BEL,Belgium,2018,Practising nurses,126406,Persons
-BEL,Belgium,2017,Practising nurses,124328,Persons
+AUS,Australia,2018,Practising nurses,295324,Persons
+AUS,Australia,2019,Practising nurses,307461,Persons
+AUS,Australia,2020,Practising nurses,312339,Persons
 BEL,Belgium,2015,Practising nurses,118829,Persons
-BEL,Belgium,2020,Practising nurses,133755,Persons
-BEL,Belgium,2019,Practising nurses,132351,Persons
 BEL,Belgium,2016,Practising nurses,121268,Persons
-CAN,Canada,2016,Practising nurses,359535,Persons
+BEL,Belgium,2017,Practising nurses,124328,Persons
+BEL,Belgium,2018,Practising nurses,126406,Persons
+BEL,Belgium,2019,Practising nurses,132351,Persons
+BEL,Belgium,2020,Practising nurses,133755,Persons
 CAN,Canada,2015,Practising nurses,353770,Persons
-CAN,Canada,2020,Practising nurses,372913,Persons
-CAN,Canada,2019,Practising nurses,359269,Persons
-CAN,Canada,2018,Practising nurses,368684,Persons
+CAN,Canada,2016,Practising nurses,359535,Persons
 CAN,Canada,2017,Practising nurses,365484,Persons
-CRI,Costa Rica,2016,Practising nurses,1822,Persons
+CAN,Canada,2018,Practising nurses,368684,Persons
+CAN,Canada,2019,Practising nurses,359269,Persons
+CAN,Canada,2020,Practising nurses,372913,Persons
 CRI,Costa Rica,2015,Practising nurses,1758,Persons
-CRI,Costa Rica,2020,Practising nurses,1896,Persons
+CRI,Costa Rica,2016,Practising nurses,1822,Persons
 CRI,Costa Rica,2017,Practising nurses,1839,Persons
-CRI,Costa Rica,2019,Practising nurses,1854,Persons
 CRI,Costa Rica,2018,Practising nurses,1849,Persons
-ESP,Spain,2016,Practising nurses,256333,Persons
+CRI,Costa Rica,2019,Practising nurses,1854,Persons
+CRI,Costa Rica,2020,Practising nurses,1896,Persons
 ESP,Spain,2015,Practising nurses,245533,Persons
-ESP,Spain,2019,Practising nurses,276833,Persons
-ESP,Spain,2018,Practising nurses,273833,Persons
-ESP,Spain,2020,Practising nurses,288300,Persons
+ESP,Spain,2016,Practising nurses,256333,Persons
 ESP,Spain,2017,Practising nurses,267267,Persons
-FRA,France,2016,Practising nurses,643685,Persons
+ESP,Spain,2018,Practising nurses,273833,Persons
+ESP,Spain,2019,Practising nurses,276833,Persons
+ESP,Spain,2020,Practising nurses,288300,Persons
 FRA,France,2015,Practising nurses,621792,Persons
-FRA,France,2020,Practising nurses,725427,Persons
-FRA,France,2019,Practising nurses,704230,Persons
-FRA,France,2018,Practising nurses,683118,Persons
+FRA,France,2016,Practising nurses,643685,Persons
 FRA,France,2017,Practising nurses,664046,Persons
-ITA,Italy,2016,Practising nurses,337515,Persons
+FRA,France,2018,Practising nurses,683118,Persons
+FRA,France,2019,Practising nurses,704230,Persons
+FRA,France,2020,Practising nurses,725427,Persons
 ITA,Italy,2015,Practising nurses,330602,Persons
-ITA,Italy,2020,Practising nurses,373064,Persons
-ITA,Italy,2019,Practising nurses,367684,Persons
-ITA,Italy,2018,Practising nurses,346949,Persons
+ITA,Italy,2016,Practising nurses,337515,Persons
 ITA,Italy,2017,Practising nurses,351008,Persons
-LVA,Latvia,2020,Practising nurses,7941,Persons
+ITA,Italy,2018,Practising nurses,346949,Persons
+ITA,Italy,2019,Practising nurses,367684,Persons
+ITA,Italy,2020,Practising nurses,373064,Persons
+LVA,Latvia,2015,Practising nurses,8781,Persons
+LVA,Latvia,2016,Practising nurses,8635,Persons
 LVA,Latvia,2017,Practising nurses,8447,Persons
 LVA,Latvia,2018,Practising nurses,8332,Persons
-LVA,Latvia,2016,Practising nurses,8635,Persons
-LVA,Latvia,2015,Practising nurses,8781,Persons
 LVA,Latvia,2019,Practising nurses,7966,Persons
-POL,Poland,2016,Practising nurses,195838,Persons
+LVA,Latvia,2020,Practising nurses,7941,Persons
 POL,Poland,2015,Practising nurses,197381,Persons
-POL,Poland,2020,Practising nurses,191081,Persons
-POL,Poland,2019,Practising nurses,193132,Persons
-POL,Poland,2018,Practising nurses,192964,Persons
+POL,Poland,2016,Practising nurses,195838,Persons
 POL,Poland,2017,Practising nurses,193700,Persons
-SWE,Sweden,2017,Practising nurses,109865,Persons
-SWE,Sweden,2016,Practising nurses,108736,Persons
-SWE,Sweden,2018,Practising nurses,110808,Persons
-SWE,Sweden,2020,Practising nurses,110586,Persons
-SWE,Sweden,2019,Practising nurses,111664,Persons
+POL,Poland,2018,Practising nurses,192964,Persons
+POL,Poland,2019,Practising nurses,193132,Persons
+POL,Poland,2020,Practising nurses,191081,Persons
 SWE,Sweden,2015,Practising nurses,107571,Persons
+SWE,Sweden,2016,Practising nurses,108736,Persons
+SWE,Sweden,2017,Practising nurses,109865,Persons
+SWE,Sweden,2018,Practising nurses,110808,Persons
+SWE,Sweden,2019,Practising nurses,111664,Persons
+SWE,Sweden,2020,Practising nurses,110586,Persons
